@@ -64,16 +64,5 @@ export async function createContainerClient(context: Context): Promise<Container
 /** Returns a client for `blobName` in the "images" container */
 export async function createImageBlobClient(context: Context, blobName: string): Promise<BlockBlobClient | null> {
     const containerClient = await createContainerClient(context);
-
-    try {
-        const createContainerResponse = await containerClient.create();
-        if (createContainerResponse.errorCode != null) {
-            context.log("(PhotoBlob) CreateContainerResponse has an error: " + createContainerResponse.errorCode);
-            return null;
-        }
-        return containerClient.getBlockBlobClient(blobName)
-    } catch(error) {
-        context.log("(PhotoBlob) Error when uploading: " + error);
-        return null;
-    }
+    return containerClient.getBlockBlobClient(blobName)
 }
