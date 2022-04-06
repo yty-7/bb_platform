@@ -1,17 +1,37 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions"
+import { createContainerClient } from "../helper"
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
-    context.log('HTTP trigger function processed a request.');
-    const name = (req.query.name || (req.body && req.body.name));
-    const responseMessage = name
-        ? "Hello, " + name + ". This HTTP triggered function executed successfully."
-        : "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response.";
+    context.log('(ListImageBlobs) HTTP trigger function processed a request.');
 
-    context.res = {
-        // status: 200, /* Defaults to 200 */
-        body: responseMessage
-    };
+    const optBlobs = await listBlobs(context).catch(error => {
+        context.log("(ListImageBlobs) encountered error: " + error);
+        return null;
+    });
 
+    if (optBlobs == null) {
+        context.res = {
+            status: 500,
+            body: "Failed to list blobs"
+        };
+    } else {
+        const blobs = optBlobs!;
+        context.res = {
+            status: 200,
+            body: "blobs: " + blobs
+        };
+    }
 };
+
+async function listBlobs(context: Context): Promise<string[]> {
+    const containerClient = await createContainerClient(context);
+    let blobNames: string[] = []
+
+    for await (const blob of containerClient.listBlobsFlat()) {
+        blobNames.push(blob.name);
+    }
+
+    return blobNames;
+}
 
 export default httpTrigger;
