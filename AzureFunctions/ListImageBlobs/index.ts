@@ -1,5 +1,5 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions"
-import { createContainerClient } from "../helper"
+import { getContainerClient } from "../helper"
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
     context.log('(ListImageBlobs) HTTP trigger function processed a request.');
@@ -24,7 +24,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
 };
 
 async function listBlobs(context: Context): Promise<string[]> {
-    const containerClient = await createContainerClient(context);
+    const containerClient = await getContainerClient(context);
     let blobNames: string[] = []
 
     for await (const blob of containerClient.listBlobsFlat()) {
