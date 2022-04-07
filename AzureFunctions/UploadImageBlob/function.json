@@ -1,4 +1,5 @@
 {
+  "entryPoint": "httpTrigger",
   "bindings": [
     {
       "authLevel": "Anonymous",

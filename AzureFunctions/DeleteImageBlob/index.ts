@@ -3,7 +3,7 @@ import { HttpRequestBody } from "@azure/storage-blob";
 import { getImageBlobClient } from "../helper";
 import { strict as assert } from 'assert';
 
-class DeleteBlobResult {
+export class DeleteBlobResult {
     /**  Whether the blob was deleted*/
     blobDeleted: boolean;
     /**
@@ -20,7 +20,7 @@ class DeleteBlobResult {
     }
 }
 
-const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
+export async function httpTrigger(context: Context, req: HttpRequest): Promise<void> {
     context.log("(deleteImageBlob) HTTP trigger function processed a request.");
     const blobName = (req.body as string).trim();
 
@@ -54,7 +54,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     }
 };
 
-async function deleteBlob(context: Context, name: string): Promise<DeleteBlobResult> {
+export async function deleteBlob(context: Context, name: string): Promise<DeleteBlobResult> {
     const optImageBlobClient = await getImageBlobClient(context, name);
     if (optImageBlobClient == null) {
         context.log("Failed to get blob client for ${name}.");

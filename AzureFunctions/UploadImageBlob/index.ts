@@ -2,7 +2,7 @@ import { AzureFunction, Context, HttpRequest } from "@azure/functions"
 import { HttpRequestBody } from "@azure/storage-blob";
 import { getContainerClient, getImageBlobClient } from "../helper";
 
-const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
+export async function httpTrigger(context: Context, req: HttpRequest): Promise<void> {
     context.log('HTTP trigger function processed a request (UploadImageBlob).');
 
      if (req.body == null) {
@@ -66,5 +66,3 @@ function isValidImageFile(body: HttpRequestBody): boolean {
     // TODO how to determine this?
     return true;
 }
-
-export default httpTrigger;
