@@ -1,7 +1,7 @@
-import { AzureFunction, Context, HttpRequest } from "@azure/functions"
-import { getContainerClient } from "../helper"
+import { Context, HttpRequest } from "@azure/functions"
+import { listBlobs } from "../blobstoreHelper"
 
-export async function httpTrigger(context: Context, req: HttpRequest): Promise<void> {
+export async function httpTrigger(context: Context, _: HttpRequest): Promise<void> {
     context.log('(ListImageBlobs) HTTP trigger function processed a request.');
 
     const optBlobs = await listBlobs(context).catch(error => {
@@ -22,14 +22,3 @@ export async function httpTrigger(context: Context, req: HttpRequest): Promise<v
         };
     }
 };
-
-export async function listBlobs(context: Context): Promise<string[]> {
-    const containerClient = await getContainerClient(context);
-    let blobNames: string[] = []
-
-    for await (const blob of containerClient.listBlobsFlat()) {
-        blobNames.push(blob.name);
-    }
-
-    return blobNames;
-}

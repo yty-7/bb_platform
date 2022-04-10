@@ -1,6 +1,6 @@
-import { AzureFunction, Context, HttpRequest } from "@azure/functions"
+import { Context, HttpRequest } from "@azure/functions"
 import { HttpRequestBody } from "@azure/storage-blob";
-import { getContainerClient, getImageBlobClient } from "../helper";
+import { uploadToBlobStore } from "../blobstoreHelper";
 
 export async function httpTrigger(context: Context, req: HttpRequest): Promise<void> {
     context.log('HTTP trigger function processed a request (UploadImageBlob).');
@@ -34,32 +34,6 @@ export async function httpTrigger(context: Context, req: HttpRequest): Promise<v
          }
      }
 };
-
-/**
- * Uploads `imageBody` to blob store, returning the name of the blob if it uploaded succesfully or
- * null if it failed. */
-async function uploadToBlobStore(context: Context, rawBody: string): Promise<string | null> {
-    const blobName = "image" + new Date().getTime();
-    const optBlobClient = await getImageBlobClient(context, blobName).catch(_ => null);
-    if (optBlobClient == null) {
-        return null;
-    }
-    const blobClient = optBlobClient!;
-
-    try {
-        let response = await blobClient.upload(rawBody, Buffer.byteLength(rawBody));
-        if (response.errorCode == null) {
-            context.log(`(UploadPhotoBlob) Succesfully uploaded blob: ${blobName}`);
-            return blobName;
-        } else {
-            context.log(`(UploadPhotoBlob) Failed to upload blob "${blobName}" with error code ${response.errorCode}`);
-            return null;
-        }
-    } catch(error) {
-        context.log("(UploadPhotoBlob) Error when uploading: " + error);
-        return null;
-    }
-}
 
 /** (TODO) Returns `true` if `body` can be decoded into a valid png file. */
 function isValidImageFile(body: HttpRequestBody): boolean {

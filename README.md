@@ -1,7 +1,7 @@
 # cs5412-project
 CS5412 Cloud Computing Project
 
-## How to ru
+## How to run
 First you need to put the `Secrets` directory at the root of the project directory.
 Then run Azure Functions by `cd`ing into the directory.
 
@@ -12,6 +12,5 @@ npm install
 
 Then run the Azure Functions locally in terminal with:
 ``` sh
-npm run
+npm start
 ```
-
