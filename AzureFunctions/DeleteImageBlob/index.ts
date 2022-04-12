@@ -1,36 +1,25 @@
 import { Context, HttpRequest } from "@azure/functions"
 import { deleteBlob } from "../blobstoreHelper";
+import { ErrorCode, responseWithMessage } from "../jsonHelper";
 
 export async function httpTrigger(context: Context, req: HttpRequest): Promise<void> {
     context.log("(deleteImageBlob) HTTP trigger function processed a request.");
     const blobName = (req.body as string).trim();
 
     if (blobName.length == 0) {
-        context.res = {
-            status: 501,
-            body: `Blob name must be non-empty`
-        };
+        context.res = responseWithMessage("Blob name must be non-empty", ErrorCode.BAD_REQUEST);
         return;
     }
 
     const result = await deleteBlob(context, blobName);
 
     if (result.blobDeleted) {
-        context.res = {
-            status: 200,
-            body: `Succesfully deleted blob: "${blobName}"`
-        };
+        context.res = responseWithMessage(`Succesfully deleted blob: "${blobName}"`, ErrorCode.OK);
     } else {
         if (result.blobDidNotExist) {
-        context.res = {
-            status: 501,
-            body: `Failed to delete blob: "${blobName}" as it did not exist`
-        };
+            context.res = responseWithMessage(`Failed to delete blob: "${blobName}" as it did not exist`, ErrorCode.BAD_REQUEST);
         } else {
-        context.res = {
-            status: 500,
-            body: `Failed to delete blob: "${blobName}"`
-        };
+            context.res = responseWithMessage(`Failed to delete blob: "${blobName}"`, ErrorCode.BAD_REQUEST);
         }
     }
 };

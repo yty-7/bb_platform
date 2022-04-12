@@ -1,42 +1,26 @@
 import { Context, HttpRequest } from "@azure/functions"
 import { HttpRequestBody } from "@azure/storage-blob";
 import { uploadToBlobStore } from "../blobstoreHelper";
+import { ErrorCode, responseWithMessage, responseWithMessageAndBlobName} from "../jsonHelper";
 
 export async function httpTrigger(context: Context, req: HttpRequest): Promise<void> {
     context.log('HTTP trigger function processed a request (UploadImageBlob).');
 
      if (req.body == null) {
-         context.res = {
-             status: 400,
-             body: "No image was provided in body of request."
-         };
-         return;
-     } else if (!isValidImageFile(req.body)) {
-         context.res = {
-             status: 400,
-             body: "Failed to parse image data from request body."
-         };
+         context.res = responseWithMessage("No image was provided in body of request.", ErrorCode.BAD_REQUEST);
          return;
      } else {
-         const result = await uploadToBlobStore(context, req.rawBody).catch(_ => false);
+         const result = await uploadToBlobStore(context, req.rawBody).catch(_ => null);
          if (result != null) {
-             context.res = {
-                 status: 200,
-                 body: `Successfully uploaded image data with name ${result}`
-             };
+             context.res = responseWithMessageAndBlobName(
+                 `Successfully uploaded image data with name ${result}`,
+                 result,
+                 ErrorCode.OK
+             );
              return;
          } else {
-             context.res = {
-                 status: 500,
-                 body: "Unable to store image data"
-             };
+             context.res = responseWithMessage("Unable to store image data", ErrorCode.INTERNAL_SERVER_ERROR);
              return;
          }
      }
 };
-
-/** (TODO) Returns `true` if `body` can be decoded into a valid png file. */
-function isValidImageFile(body: HttpRequestBody): boolean {
-    // TODO how to determine this?
-    return true;
-}
