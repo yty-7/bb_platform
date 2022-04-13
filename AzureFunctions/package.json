@@ -17,6 +17,7 @@
     "typescript": "^3.3.3"
   },
   "dependencies": {
+    "@azure/cosmos": "^3.15.1",
     "@azure/storage-blob": "^12.9.0",
     "dotenv": "^16.0.0"
   }
