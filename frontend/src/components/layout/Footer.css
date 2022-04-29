@@ -1,0 +1,36 @@
+footer {
+    border-top: 1px solid #bfbfbf;
+    margin: 2em;
+  }
+  
+  .first {
+    width: auto;
+    margin-top: 1em;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+  }
+  .first a {
+    display: flex;
+    text-decoration: none;
+    color: #333;
+    margin: 0 1em;
+  }
+  /* .first a img {
+    width: 65px;
+    height: 65px;
+  } */
+  .first a p {
+    margin: 0;
+  }
+  .first .right {
+    margin: auto;
+    text-align: left;
+  }
+  .second {
+    text-align: center;
+    font-size: 12px;
+  }
+  .needSpace {
+      margin: 0 2px;
+  }
