@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: bb_platform_web:latest
+    ports:
+      - "8000:80"
+
+  backend:
+    build:
+      context: ./bb_platform
+      dockerfile: Dockerfile
+    image: bb_platform_back:latest
+    ports:
+      - "8080:8080"
