@@ -8,7 +8,7 @@ def upload_filepath(instance, filename):
         by post_save signal
     """
     user_id = f'user_{instance.owner.id}'
-    return '/'.join(['datasets', instance.owner.get_username(), filename])
+    return '/'.join(['datasets', instance.owner.get_username(), filename]) #, f'tmp_{instance.name}_tmp'
 
 
 class DatasetMetaManager(models.Manager):
@@ -35,8 +35,7 @@ class DatasetMeta(models.Model):
 
     name = models.CharField(max_length=50)
     description = models.TextField(max_length=200)
-    filepath = models.TextField(max_length=200)
-    #filepath = models.FileField(upload_to=upload_filepath)
+    filepath = models.FileField(upload_to=upload_filepath)
     # BLACKBIRD = 0 PMROBOT = 1
     platform = models.IntegerField()
     # TRAINING = 0 VALIDATION = 1 INFERENCE = 2

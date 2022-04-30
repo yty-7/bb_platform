@@ -65,6 +65,7 @@ output_csv_filepath = dataset_root_path / \
 
 # Ad-hoc
 image_folders = []
+logger.info("dataset_root_path is", dataset_root_path)
 trays = os.listdir(dataset_root_path)
 # trays = sorted(trays, key=lambda t: int(t[-1]))
 for tray in trays:

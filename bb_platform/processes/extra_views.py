@@ -48,7 +48,7 @@ def run_process(request, pk=None):
         email_subject = 'Testing Django'
         email_content = 'Email sent from Django'
         sender = 'autumn5816@gmail.com'
-        receivers = ['tq42@cornell.edu']
+        receivers = ['lh665@cornell.edu']
 
         send_mail(email_subject, email_content, sender,
                   receivers, fail_silently=False,)
@@ -56,25 +56,27 @@ def run_process(request, pk=None):
             dataset_meta.filepath.path)
         project_dataset_data.status = 'D'
         project_dataset_data.save()
-
         logger.info(
             f'Send training requests email from {sender} to {receivers}')
     else:
         dataset_main_folder = Path(dataset_meta.filepath.path).parent
-        dataset_folder = dataset_main_folder / 'extract' / 'Inference'
+        logger.info('data_main folder is',dataset_main_folder)
+        dataset_folder = dataset_main_folder
+        # 'extract' / 'Inference'
 
-        if not os.path.exists(dataset_folder):
-            logger.debug('Run process error')
-            logger.debug(f'Not found {dataset_folder}')
+        # if not os.path.exists(dataset_folder):
+        #     logger.debug('Run process error')
+        #     logger.debug(f'Not found {dataset_folder}')
 
-            errors = OrderedDict()
-            errors['validation'] = 'Not found inference folder'
-            raise ValidationError(errors)
+        #     errors = OrderedDict()
+        #     errors['validation'] = 'Not found inference folder'
+        #     raise ValidationError(errors)
 
         # Output folder
         project_main_folder = project_meta.root_path
         output_folder = os.path.join(
             project_main_folder, f'dataset_{dataset_meta.id}')
+        logger.info("output_folder is ", output_folder)
         if not os.path.exists(output_folder):
             os.mkdir(output_folder)
             logger.info('Run process info')
@@ -113,11 +115,10 @@ def run_process(request, pk=None):
         }
 
         import threading
-
         analyzer_thread = threading.Thread(
             target=analyzer, args=(opt, project_dataset_data,), daemon=True)
         analyzer_thread.start()
-
+        logger.info("have come here 121")
     return Response(status=status.HTTP_200_OK)
 
 
@@ -144,17 +145,19 @@ def display_image(request, pk=None):
     ret = OrderedDict()
 
     # Output folder
+    
+    #image_output_folder = project_dataset_data.image_output_folder
     image_output_folder = project_dataset_data.image_output_folder
-
+    logger.info("image_output_folder is", image_output_folder)
     tray_folders = [f for f in os.listdir(image_output_folder) if os.path.isdir(
         os.path.join(image_output_folder, f)) and not f.startswith('__MACOSX')]
-
+    
     # Metric funcs
     metric_func_dict = settings.METRIC_FUNC
     metric_funcs = process_meta.metric_funcs.values_list(
         'metric_func', flat=True)
     metrics = [metric_func_dict[x] for x in metric_funcs]
-
+    logger.info("have come here 157")
     for tray_folder in tray_folders:
         tray_image_folder = os.path.join(image_output_folder, tray_folder)
         tray_csv_folder = tray_image_folder.replace('images', 'files')

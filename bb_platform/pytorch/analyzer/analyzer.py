@@ -71,9 +71,9 @@ def analyzer(opt, instance):
         output_folder = Path(opt['output_folder'])
 
         # List all tray folders
+        logger.info(dataset_root_path)
         tray_folders = [f for f in os.listdir(dataset_root_path) if os.path.isdir(
             os.path.join(dataset_root_path, f)) and not f.startswith('__MACOSX')]
-
         # Basic config
         # Threshold for severity ratio
         target_class = int(opt['target_class']
@@ -96,7 +96,7 @@ def analyzer(opt, instance):
         means = [118./255., 165./255., 92./255.]
         stds = [40./255., 35./255., 51./255.]
         normalize = transforms.Normalize(means, stds)
-
+        logger.info(f'99')
         # Captum
         saliency_methods = {} 
         saliency_methods_dict = settings.SALIENCY_FUNC
@@ -108,7 +108,6 @@ def analyzer(opt, instance):
                 saliency_methods[sm_name] = Saliency(model)
 
         lgc = LayerGradCam(model, last_conv_layer)
-
         # Green-Red color blindness
         default_cmap = LinearSegmentedColormap.from_list(
             "MyColor", ["white", "blue", "red"]
@@ -120,35 +119,44 @@ def analyzer(opt, instance):
         # Dynamically load metric functions
         metrics = []
         metric_func_dict = settings.METRIC_FUNC
-
+        logger.info("metrix_funcs is", opt['metric_funcs'])
         for metric_func in opt['metric_funcs']:
+            logger.info(f'124')
             metric_name = metric_func_dict[metric_func.metric_func]
             metric_func_filepath = metric_func.filepath.path
             metric_func_rel_filepath = extract_filename(metric_func_filepath)
             # Exclude suffix .py
             metric_func_valid_filepath = '.'.join(
                 metric_func_rel_filepath.split(os.sep))[:-3]
-
+            logger.info("metric_func_valid_filepath is", metric_func_valid_filepath)
             metric_module = import_module(metric_func_valid_filepath)
             metric = getattr(metric_module, 'metric')
             metrics.append(metric)
-
+            logger.info(f'135')
             META_COL_NAMES.append(metric_name)
-
         severity_rate_df = pd.DataFrame(columns=META_COL_NAMES)
-
+        logger.info(f'139')
         # Crop and assembly
-        for tray_folder in tray_folders:
-            image_folder = dataset_root_path / tray_folder / 'images'
-            output_image_folder = output_folder / 'images' / tray_folder
-            output_file_folder = output_folder / 'files' / tray_folder
-
-            imagenames = [f for f in os.listdir(
+        # logger.info(f'140')
+        # for tray_folder in tray_folders:
+            # image_folder = dataset_root_path / tray_folder / 'images'
+            # output_image_folder = output_folder / 'images' / tray_folder
+            # output_file_folder = output_folder / 'files' / tray_folder
+        image_folder = dataset_root_path / 'images'
+        if (not os.path.exists(image_folder)):
+            os.mkdir(image_folder)
+        output_image_folder = output_folder / 'images'
+        if (not os.path.exists(output_image_folder)):
+            os.mkdir(output_image_folder)
+        output_file_folder = output_folder / 'files' 
+        if (not os.path.exists(output_file_folder)):
+            os.mkdir(output_file_folder)
+        imagenames = [f for f in os.listdir(
                 image_folder) if not f.startswith('.DS_Store')]
 
-            output_csv_filepath = output_file_folder / 'severity-rate.csv'
-
-            for idx, imagename in enumerate(imagenames[:]):
+        output_csv_filepath = output_file_folder / 'severity-rate.csv'
+        logger.info(f'150')
+        for idx, imagename in enumerate(imagenames[:]):
                 logger.info('Processing: {}'.format(imagename))
 
                 img_path = image_folder / imagename
@@ -166,7 +174,7 @@ def analyzer(opt, instance):
                 padding_im = pad_images(im, step_size, IMG_WIDTH, IMG_HEIGHT)
                 resized_im = resize_images(im, padding_im)
                 preproc_full_img = preprocessing(resized_im)
-
+                logger.info(f'169')
                 # Masking
                 imask = leaf_mask(resized_im, rel_th=opt['rel_th'])
                 if imask is None:
@@ -203,6 +211,7 @@ def analyzer(opt, instance):
                     for _ in range(subim_x):
                         subim_mask = imask[coor_y: coor_y + IMG_HEIGHT,
                                            coor_x: coor_x + IMG_WIDTH]
+                        logger.info(f'206')
                         if on_focus(subim_mask):
                             # Cropping
                             box = (coor_x, coor_y, coor_x +
@@ -248,7 +257,7 @@ def analyzer(opt, instance):
 
                 logger.info('Finished crop and inference: {}'.format(
                     timeSince(start_time)))
-
+                logger.info(f'250')
                 # Reconstruction
                 prob_heatmap = np.zeros(
                     shape=(height, width), dtype=np.float)
@@ -314,29 +323,29 @@ def analyzer(opt, instance):
 
                 logger.info('Analysis finished: {}'.format(
                     timeSince(start_time)))
-
-            if not os.path.exists(output_file_folder):
+            
+        if not os.path.exists(output_file_folder):
                 os.makedirs(output_file_folder, exist_ok=True)
-
-            severity_rate_df.to_csv(output_csv_filepath, index=False)
-            logger.info('Saved {}'.format(output_csv_filepath))
+        logger.info(f'320')
+        severity_rate_df.to_csv(output_csv_filepath, index=False)
+        logger.info('Saved {}'.format(output_csv_filepath))
 
             # Zip file
-            image_output_folder = output_folder / 'images'
-            csv_output_folder = output_folder / 'files'
-            zip_filepaths = zip_file(
+        image_output_folder = output_folder / 'images'
+        csv_output_folder = output_folder / 'files'
+        zip_filepaths = zip_file(
                 output_folder, image_output_folder, csv_output_folder)
-
+        logger.info(f'338')
             # Update database
-            instance.output_folder = output_folder
-            instance.image_output_folder = image_output_folder
-            instance.csv_output_folder = csv_output_folder
-            instance.image_output_zip_path = zip_filepaths['images']
-            instance.csv_output_zip_path = zip_filepaths['files']
-            instance.status = 'D'
-            instance.save()
-
-            logger.info('Updated intermedia table')
+        instance.output_folder = output_folder
+        instance.image_output_folder = image_output_folder
+        instance.csv_output_folder = csv_output_folder
+        instance.image_output_zip_path = zip_filepaths['images']
+        instance.csv_output_zip_path = zip_filepaths['files']
+        instance.status = 'D'
+        instance.save()
+        logger.info(f'347')
+        logger.info('Updated intermedia table')
 
     except Exception as e:
         logger.info(f'Analysis error: {e}')
@@ -354,10 +363,10 @@ def zip_file(output_path, image_output_path, csv_output_path):
     ret = {}
 
     for zip_item in zip_list:
-        zipped_filepath = os.path.join(output_path, f'{zip_item}.zip')
+        zipped_filepath = os.path.join(output_path, zip_item, f'{zip_item}.zip')
         exist = os.path.exists(zipped_filepath)
         zip_folder = image_output_path if zip_item == 'images' else csv_output_path
-
+        
         # if not exist:
         #     zip_res = shutil.make_archive(zip_folder, 'zip', zip_folder)
         #     logger.info(f'Zipped {zip_folder} to {zip_res}')
@@ -377,5 +386,6 @@ def zip_file(output_path, image_output_path, csv_output_path):
         logger.info(f'Zipped {zip_folder} to {zip_res}')
 
         ret[zip_item] = extract_filename(zip_res)
+
 
     return ret

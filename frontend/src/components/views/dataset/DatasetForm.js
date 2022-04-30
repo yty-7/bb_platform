@@ -26,7 +26,6 @@ export class DatasetForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
       name: "",
       description: "",
       platform: platformDict["BlackBird"] || 0,
@@ -82,7 +81,6 @@ export class DatasetForm extends Component {
 
   render() {
     const {
-      filepath,
       name,
       description,
       platform,
@@ -99,15 +97,7 @@ export class DatasetForm extends Component {
         <CardField title="Create Dataset">
           <form onSubmit={this.onSubmit}>
             <TextField
-              label="Dataset Name"
-              type="text"
-              id="file"
-              name="filepath"
-              value={filepath}
-              onChange={this.onChange}
-            />
-            <TextField
-              label="Label"
+              label="Name"
               type="text"
               id="name"
               name="name"
@@ -158,7 +148,7 @@ export class DatasetForm extends Component {
               items={annotationDict}
               itemType="dict"
             />
-            {/* <div className="form-group">
+            <div className="form-group">
               <label htmlFor="file">File</label>
               <input
                 type="file"
@@ -167,7 +157,7 @@ export class DatasetForm extends Component {
                 name="filepath"
                 onChange={this.fileOnChange}
               />
-            </div> */}
+            </div>
             <button type="submit" className="btn btn-primary">
               Create
             </button>
