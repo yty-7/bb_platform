@@ -121,7 +121,7 @@ export class EditDataset extends Component {
         <CardField title="Edit Dataset">
           <form onSubmit={this.onSubmit}>
             <TextField
-              label="Name"
+              label="Label"
               type="text"
               id="name"
               name="name"
