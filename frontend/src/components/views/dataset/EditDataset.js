@@ -175,16 +175,6 @@ export class EditDataset extends Component {
             <div className="alert alert-danger" role="alert">
               Current File: <strong>{getFilename(filepath)}</strong>
             </div>
-            <div className="form-group">
-              <label htmlFor="file">File</label>
-              <input
-                type="file"
-                className="form-control"
-                id="file"
-                name="newFile"
-                onChange={this.fileOnChange}
-              />
-            </div>
             <button type="submit" className="btn btn-primary">
               Save
             </button>

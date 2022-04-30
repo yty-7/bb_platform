@@ -22,7 +22,7 @@ def remove_dirs(instance):
     """
     #filepath = Path(instance.filepath.path)
     #file_folder = filepath.parent
-    filepath = f'/Users/tingyi/Desktop/BB_platform-master/bb_platform/media/datasets/{instance.owner.get_username()}/{instance.filepath}'
+    filepath = f'/Users/tangshiyin/Documents/project/OneDrive_2_9-22-2021/BB_platform-master/bb_platform/media/datasets/{instance.owner.get_username()}/{instance.filepath}'
     logger.info(f'delete filepath {filepath}')
     try:
         #shutil.rmtree(file_folder)

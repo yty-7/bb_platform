@@ -23,7 +23,7 @@ class DatasetMetaCreateListView(ListCreateAPIView):
     permission_classes = [
         permissions.IsAuthenticated
     ]
-    serializer_class = DatasetMetaSerializer
+    serializer_class = DatasetMetaSerializer  #datasets data serializer, 里面有dataset的metadata filepath...
 
     def get_queryset(self):
         return self.request.user.datasetsmeta.all().order_by('id')
@@ -55,9 +55,9 @@ class DatasetMetaCreateListView(ListCreateAPIView):
         filepath = request.data['filepath']
         logger.info(
             f'New request from: {self.request.user} with requested data: {filepath}')
-        
+
         # check whether dataset exist in specific path
-        checkfilepath = f'/Users/tingyi/Desktop/BB_platform-master/bb_platform/media/datasets/{self.request.user}/{filepath}'
+        checkfilepath = f'/Users/tangshiyin/Documents/project/OneDrive_2_9-22-2021/BB_platform-master/bb_platform/media/datasets/{self.request.user}/{filepath}'
         errors = OrderedDict()
         errors['validation'] = f'NO dataset named {filepath} found'
         if not os.path.exists(checkfilepath):

@@ -72,13 +72,15 @@ export class DatasetForm extends Component {
     formData.append("mode", mode);
     formData.append("structure", structure);
     formData.append("annotation", annotation);
-    formData.append("filepath", filepath);
+    formData.append("filepath", filepath+'.zip');
     this.props.addDataset(formData);
     this.setState({
       name: "",
       description: "",
     });
   }
+
+  
 
   render() {
     const {
@@ -113,6 +115,10 @@ export class DatasetForm extends Component {
               name="name"
               value={name}
               onChange={this.onChange}
+              // autoComplete="please input a unique id"
+              // helperText={
+              //   "input the unique id"
+              // }
             />
             <TextField
               label="Description"
