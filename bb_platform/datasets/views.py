@@ -57,7 +57,8 @@ class DatasetMetaCreateListView(ListCreateAPIView):
             f'New request from: {self.request.user} with requested data: {filepath}')
 
         # check whether dataset exist in specific path
-        checkfilepath = f'/Users/tangshiyin/Documents/project/OneDrive_2_9-22-2021/BB_platform-master/bb_platform/media/datasets/{self.request.user}/{filepath}'
+        
+        checkfilepath = f'{os.getcwd()}/media/datasets/{self.request.user}/{filepath}'
         errors = OrderedDict()
         errors['validation'] = f'NO dataset named {filepath} found'
         if not os.path.exists(checkfilepath):
