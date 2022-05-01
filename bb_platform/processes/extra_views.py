@@ -60,7 +60,7 @@ def run_process(request, pk=None):
             f'Send training requests email from {sender} to {receivers}')
     else:
         dataset_main_folder = Path(dataset_meta.filepath.path).parent
-        logger.info('data_main folder is',dataset_main_folder)
+        # logger.info('data_main folder is',dataset_main_folder)
         dataset_folder = dataset_main_folder
         # 'extract' / 'Inference'
 
@@ -76,7 +76,7 @@ def run_process(request, pk=None):
         project_main_folder = project_meta.root_path
         output_folder = os.path.join(
             project_main_folder, f'dataset_{dataset_meta.id}')
-        logger.info("output_folder is ", output_folder)
+        # logger.info("output_folder is ", output_folder)
         if not os.path.exists(output_folder):
             os.mkdir(output_folder)
             logger.info('Run process info')
@@ -157,7 +157,7 @@ def display_image(request, pk=None):
     metric_funcs = process_meta.metric_funcs.values_list(
         'metric_func', flat=True)
     metrics = [metric_func_dict[x] for x in metric_funcs]
-    logger.info("have come here 157")
+    logger.info("have come here meyt")
     for tray_folder in tray_folders:
         tray_image_folder = os.path.join(image_output_folder, tray_folder)
         tray_csv_folder = tray_image_folder.replace('images', 'files')

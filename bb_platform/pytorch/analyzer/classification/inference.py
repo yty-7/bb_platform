@@ -226,3 +226,4 @@ if __name__ == "__main__":
     print('False infected patches\' idx : {}'.format(f_p[:10]))
     print('True clear patches\' idx : {}'.format(t_n[:10]))
     print('False clear patches\' idx : {}'.format(f_n[:10]))
+ 

@@ -119,7 +119,7 @@ def analyzer(opt, instance):
         # Dynamically load metric functions
         metrics = []
         metric_func_dict = settings.METRIC_FUNC
-        logger.info("metrix_funcs is", opt['metric_funcs'])
+        logger.info("metrix_funcs is")
         for metric_func in opt['metric_funcs']:
             logger.info(f'124')
             metric_name = metric_func_dict[metric_func.metric_func]
@@ -227,7 +227,7 @@ def analyzer(opt, instance):
                             _, prob = pred_img(normalized_inp, model)
                             output_masks = get_saliency_masks(
                                 saliency_methods, normalized_inp, target_class, relu_attributions=False)
-
+                            logger.info("prob is", prob)
                             # Store
                             prob_value = prob[0][1].cpu().detach().item()
                             prob_attrs[patch_idx] = prob_value
