@@ -6,8 +6,8 @@ export default function Datasetboard() {
   return (
     <Fragment>
       <div className="Datasetboard">
-        <DatasetForm />
         <DatasetList />
+        <DatasetForm />
       </div>
     </Fragment>
   );

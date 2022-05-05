@@ -15,10 +15,10 @@ export class Header extends Component {
   render() {
     const { isAuthenticated, user } = this.props.auth;
 
-    const authLinks = (
+    const authLinks = (  
       <nav className="Status" style={style.Status}>
-        <span style={{ marginRight: "1em", color: "black" }}>
-          <strong>{user ? `Welcome ${user.username}` : ""}</strong>
+        <span style={{ marginRight: "1em", color: "black" }}>   
+          <strong>{user ? `Welcome ${user.username}` : ""}</strong>  
         </span>
         <button
           onClick={this.props.logout}
@@ -96,5 +96,10 @@ const style = {
   Link: {
     textDecoration: "none",
     color: "black",
+  },
+  Logout: {
+    lineHeight: 4,
+    marginRight: "1em",
+    color: "brown",
   },
 };

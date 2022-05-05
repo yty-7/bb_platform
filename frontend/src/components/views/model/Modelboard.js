@@ -6,8 +6,9 @@ export default function Modelboard() {
   return (
     <Fragment>
       <div className="Modelboard">
-        <ModelForm />
+        {/* <ModelForm /> */}
         <ModelList />
+        <ModelForm />
       </div>
     </Fragment>
   );

@@ -150,6 +150,7 @@ const ImageCardStyle = {
     textAlign: "center",
     fontSize: "1.5em",
     marginBottom: "1em",
+    // background: "blue"
   },
   Text: {
     marginLeft: "1em",
@@ -159,12 +160,13 @@ const ImageCardStyle = {
   },
 };
 
-export const CardStyle = {
+export const CardStyle = {      //card颜色
   Card: {
     width: "80%",
     margin: "auto",
     marginTop: "1em",
     marginBottom: "1em",
+    background: "lavender"
   },
   Title: {
     marginTop: "1em",

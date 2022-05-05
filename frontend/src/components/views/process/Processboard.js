@@ -6,8 +6,9 @@ export default function Processboard() {
   return (
     <Fragment>
       <div className="Processboard">
-        <ProcessForm />
+        {/* <ProcessForm /> */}
         <ProcessList />
+        <ProcessForm />
       </div>
     </Fragment>
   );

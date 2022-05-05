@@ -6,8 +6,9 @@ export default function Projectboard() {
   return (
     <Fragment>
       <div className="Projectboard">
-        <ProjectForm />
+        {/* <ProjectForm /> */}
         <ProjectList />
+        <ProjectForm />
       </div>
     </Fragment>
   );
