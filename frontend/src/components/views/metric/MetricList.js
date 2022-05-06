@@ -48,7 +48,7 @@ export class MetricList extends Component {
                     <Link to={`/metrics/edit/${metric.id}`}>
                       <ButtonWithAmin
                         isAdmin={this.props.isAdmin}
-                        className="btn btn-success"
+                        className="btn btn-primary"
                         text="Edit"
                       />
                     </Link>
