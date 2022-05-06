@@ -28,7 +28,7 @@ export default connect(mapStateToProps)(PrivateRoute);
 
 export const LinkTag = (props) => {
   return (
-   
+  
       <Link to={props.to} style={{ color: "steelblue", textDecoration: "none" }}>   
         {props.children}
       </Link>

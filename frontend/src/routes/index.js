@@ -22,9 +22,11 @@ import EditModel from "../components/views/model/EditModel";
 
 import Metricboard from "../components/views/metric/Metricboard";
 import EditMetric from "../components/views/metric/EditMetric";
+import homepage from "../components/common/Homepage";
 
 export default (
   <Switch>
+    <Route exact path="/" component={homepage} />
     <Route exact path="/login" component={Login} />
     <Route exact path="/register" component={Register} />
     <PrivateRoute exact path="/" component={Dashboard} />

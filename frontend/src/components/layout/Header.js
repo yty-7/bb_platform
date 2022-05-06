@@ -42,7 +42,7 @@ export class Header extends Component {
           </nav>
         </Link>
         <Link to="/login" style={style.Link}>
-          <nav className="Login" style={style.Login}>
+          <nav className="nav-link btn btn-info btn-sm text-heavy" style={style.Logout}>
             Login
           </nav>
         </Link>

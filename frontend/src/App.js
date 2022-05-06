@@ -41,8 +41,8 @@ export default class App extends Component {
             <Fragment>
               <div className="App">
                 <Header />
-                <Homepage  />
-                {/* <PrivateRoute component={Nav} /> */}
+                {/* <Homepage  /> */}
+                <PrivateRoute component={Nav} />
                 <Alerts />
                 {masterRoute}
                 <Footer />
