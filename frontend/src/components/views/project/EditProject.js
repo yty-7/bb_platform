@@ -205,7 +205,7 @@ export class EditProject extends Component {
         <CardField title="Edit Project">
           <form onSubmit={this.onSubmit}>
             <TextField
-              label="Nmae"
+              label="Name"
               type="text"
               id="name"
               name="name"

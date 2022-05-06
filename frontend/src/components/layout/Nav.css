@@ -13,4 +13,5 @@
   justify-content: space-around;
   flex-wrap: nowrap; /* assumes you only want one row */
   font-weight: 800;
+  /* background-color: gainsboro; */
 }

@@ -14,6 +14,7 @@ import Alerts from "./components/layout/Alerts";
 import Footer from "./components/layout/Footer";
 
 import PrivateRoute from "./components/common/PrivateRoute";
+import HomePage from "./components/common/HomePage";
 
 import masterRoute from "./routes/index";
 
@@ -40,6 +41,7 @@ export default class App extends Component {
             <Fragment>
               <div className="App">
                 <Header />
+                {/* <HomePage  /> */}
                 <PrivateRoute component={Nav} />
                 <Alerts />
                 {masterRoute}

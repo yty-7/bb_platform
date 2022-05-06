@@ -166,7 +166,7 @@ export const CardStyle = {      //card颜色
     margin: "auto",
     marginTop: "1em",
     marginBottom: "1em",
-    background: "lavender"
+    background: "aliceblue "   //aliceblue
   },
   Title: {
     marginTop: "1em",

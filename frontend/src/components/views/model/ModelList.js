@@ -48,7 +48,7 @@ export class ModelList extends Component {
                     <Link to={`/models/edit/${model.id}`}>
                       <ButtonWithAmin
                         isAdmin={this.props.isAdmin}
-                        className="btn btn-success"
+                        className="btn btn-primary"
                         text="Edit"
                       />
                     </Link>

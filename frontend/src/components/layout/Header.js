@@ -20,12 +20,17 @@ export class Header extends Component {
         <span style={{ marginRight: "1em", color: "black" }}>   
           <strong>{user ? `Welcome ${user.username}` : ""}</strong>  
         </span>
-        <button
+        {/* <button
           onClick={this.props.logout}
-          className="nav-link btn btn-info btn-sm text-light"
+          className="Status"//"nav-link btn btn-info btn-sm text-heavy"
         >
           Logout
-        </button>
+        </button> */}
+
+        <button onClick={this.props.logout}  className="nav-link btn btn-info btn-sm text-heavy" style={style.Logout}>   
+              Logout
+          </button>
+        
       </nav>
     );
 
@@ -85,6 +90,7 @@ const style = {
   Status: {
     display: "flex",
     alignItems: "center",
+    color: "purple",
   },
   Register: {
     lineHeight: 4,
@@ -97,9 +103,9 @@ const style = {
     textDecoration: "none",
     color: "black",
   },
-  Logout: {
-    lineHeight: 4,
-    marginRight: "1em",
-    color: "brown",
-  },
+  Logout:{
+    boxSizing: "border-box",
+    // color: "black",
+    backgroundColor: 'steelblue'
+  }
 };
