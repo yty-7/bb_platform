@@ -124,13 +124,14 @@ class DatasetMetaUpdateView(RetrieveUpdateDestroyAPIView):
         return super().delete(request, *args, **kwargs)
 
 
-class ProjectDatasetListView(ListAPIView):
+class ProjectDatasetListView(ListAPIView):  #project ddatasets view
     permission_classes = [
         permissions.IsAuthenticated
     ]
     serializer_class = DatasetMetaSerializer
 
     def get(self, request, pk=None):
+        print("project list view>>>>>>>>>>>>")
         """
             Retrieve datasets corresponding to the current project
         Args:
@@ -138,10 +139,12 @@ class ProjectDatasetListView(ListAPIView):
         """
         instance = ProjectMeta.objects.get(id=pk)
         dataset_ids = instance.project.datasets.values_list('id', flat=True)
-        queryset = DatasetMeta.objects.filter(
-            dataset__in=dataset_ids).order_by('id')
+        # queryset = DatasetMeta.objects.filter(
+        #     dataset__in=dataset_ids).order_by('id')
+        queryset = DatasetMeta.objects.all
 
         page = self.paginate_queryset(queryset)
+        print("page list view>>>>>>>>>>>>",page)
         if page is not None:
             serializer = self.get_serializer(page, many=True)
             return self.get_paginated_response(serializer.data)

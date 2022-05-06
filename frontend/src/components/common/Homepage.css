@@ -1,0 +1,39 @@
+
+.intro{
+    /* 大字的样式 */
+    padding-top: 40px;
+    padding-bottom: 5px;
+    text-align: center;
+    margin: auto;
+    height: fit-content;
+    width: 80%;
+    word-wrap: break-word;
+    font-size: 60px;
+    font-weight: bolder;
+    color: rgb(29, 34, 38);
+}
+.emp{
+    /* 紫色那个字的样式 */
+    color: rgba(45, 90, 122, 0.863);
+}
+.small{
+    /* 小字的样式 */
+    padding-bottom: 40px;
+    text-align: center;
+    margin: auto;
+    height: fit-content;
+    width: 50%;
+    word-wrap: break-word;
+    font-size: 24px;
+    color: rgba(75, 97, 116, 0.614);
+
+}
+.img{
+    margin: auto;
+    /* 图片宽度 */
+    width: 70%;
+    background-color: aliceblue;
+}
+body{
+    background-color:whitesmoke;
+}

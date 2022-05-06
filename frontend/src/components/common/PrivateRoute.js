@@ -1,6 +1,9 @@
-import React from "react";
+// import React from "react";
 import { connect } from "react-redux";
 import { Route, Redirect, Link } from "react-router-dom";
+
+import React, { Component, Fragment } from "react";
+// import Header from "../layout/Header";
 
 const PrivateRoute = ({ component: Component, auth, ...rest }) => (
   <Route
@@ -25,9 +28,11 @@ export default connect(mapStateToProps)(PrivateRoute);
 
 export const LinkTag = (props) => {
   return (
-    <Link to={props.to} style={{ color: "steelblue", textDecoration: "none" }}>   
-      {props.children}
-    </Link>
+   
+      <Link to={props.to} style={{ color: "steelblue", textDecoration: "none" }}>   
+        {props.children}
+      </Link>
+    
   );
 };
 //所有linkTag是这样

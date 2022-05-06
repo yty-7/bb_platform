@@ -33,6 +33,7 @@ export default function (state = initialState, action) {
         detailedDataset: action.payload || {},
       };
     case DELETE_DATASET:
+      console.log("Deletedhhhhhhh>>>>>>>>>")
       return {
         ...state,
         datasets: state.datasets.filter(
@@ -40,6 +41,7 @@ export default function (state = initialState, action) {
         ),
       };
     case ADD_DATASET:
+      console.log("hhhhhhh>>>>>>>>>")
       return {
         ...state,
         datasets: [...state.datasets, action.payload],
