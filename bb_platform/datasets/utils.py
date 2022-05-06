@@ -140,6 +140,7 @@ def integrity_check(instance):
 
     dataset_mode_dict = settings.DATASET_MODE_DICT
     annotation_converter_dict = settings.ANNOTATION_CONVERTER_DICT
+    print("check")
 
     # Return errors
     errors = OrderedDict()
