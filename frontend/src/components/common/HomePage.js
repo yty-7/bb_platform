@@ -9,9 +9,7 @@ import { LinkTag } from "../common/PrivateRoute";
 import { CardField } from "../common/CustomField";
 
 export default function  homepage(props) {
-    
     return (
-    
          <Fragment>
          <div>
             <div className="intro"> Cloud-based Information System For <span className="emp">Digital Agriculture</span> </div>
@@ -26,7 +24,6 @@ export default function  homepage(props) {
                     />
             </div>
         </div>
-
          <div className="Dashboard">
            <BoardCard
              link="projects"
