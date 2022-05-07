@@ -2,7 +2,7 @@ import os
 from collections import OrderedDict
 from rest_framework.exceptions import ValidationError
 
-from datasets.models import DatasetMeta
+from datasets.models import DatasetMeta, Dataset
 from datasets.serializers import DatasetMetaSerializer
 from datasets.utils import remove_dirs, integrity_check
 
@@ -33,7 +33,8 @@ class DatasetMetaCreateListView(ListCreateAPIView):
             Get dataset meta instances list w/wi pagination
         """
         queryset = self.filter_queryset(self.get_queryset())
-
+        logger.info(f'Dataset {Dataset.objects.all().values()}')
+        logger.info(f'DatasetMeta {DatasetMeta.objects.all().values()}')
         page_num = self.request.query_params.get('page', None)
         page = self.paginate_queryset(queryset)
         if page is not None and page_num is not None:
@@ -70,7 +71,7 @@ class DatasetMetaCreateListView(ListCreateAPIView):
             data=request.data, context={'request': request})
         if serializer.is_valid():
             instance = serializer.save(owner=self.request.user)
-            #integrity_check(instance)
+            integrity_check(instance)
             logger.info(
                 f'Finished request from {self.request.user} with requested data {instance.filepath}')
             return Response(serializer.data, status=status.HTTP_201_CREATED)

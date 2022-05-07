@@ -133,6 +133,7 @@ def integrity_check(instance):
         instance:      A newly created instance
     """
 
+    # raw_filepath = instance.filepath.path
     raw_filepath = instance.filepath.path
     mode = instance.mode
     annotation = instance.annotation
@@ -140,7 +141,7 @@ def integrity_check(instance):
 
     dataset_mode_dict = settings.DATASET_MODE_DICT
     annotation_converter_dict = settings.ANNOTATION_CONVERTER_DICT
-    print("check")
+    logger.info("check")
 
     # Return errors
     errors = OrderedDict()
