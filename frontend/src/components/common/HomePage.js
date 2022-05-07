@@ -13,7 +13,7 @@ export default function  homepage(props) {
          <Fragment>
          <div>
             <div className="intro"> Cloud-based Information System For <span className="emp">Digital Agriculture</span> </div>
-             <div className="small">A system that can manage,curate, analyze, and visualize image datasets for high throughput plant pheotyping</div>
+             <div className="small">A system that can manage,curate, analyze, and visualize image datasets for high throughput plant phenotyping</div>
 
              <div className="img">
                  <img
