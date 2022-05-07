@@ -67,8 +67,9 @@ def run_process(request, pk=None):
         dataset_main_folder = f'{os.getcwd()}/media/datasets/{dataset_meta.owner}/{dataset_meta.filepath}'
         #dataset_main_folder = Path(dataset_meta.filepath.path).parent
         logger.info(f'dataset_main_folder : {dataset_main_folder}')
-        dataset_folder = dataset_main_folder / 'extract' / 'Inference'
-
+        dataset_folder = f'{dataset_main_folder}/extract/Inference'
+        logger.info(f'dataset_folder : {dataset_folder}')
+        
         if not os.path.exists(dataset_folder):
             logger.debug('Run process error')
             logger.debug(f'Not found {dataset_folder}')
@@ -78,14 +79,15 @@ def run_process(request, pk=None):
             raise ValidationError(errors)
 
         # Output folder
+        logger.info(f'project_meta : {project_meta}')
         project_main_folder = project_meta.root_path
+        logger.info(f'project_main_folder : {project_main_folder}')
         output_folder = os.path.join(
             project_main_folder, f'dataset_{dataset_meta.id}')
         if not os.path.exists(output_folder):
             os.mkdir(output_folder)
             logger.info('Run process info')
             logger.info(f'Created {output_folder}')
-        logger.info(f'output_folder : {output_folder}')
 
         # Model type
         model_type_dict = settings.MODEL_TYPE_DICT

@@ -72,7 +72,7 @@ export class DatasetForm extends Component {
     formData.append("mode", mode);
     formData.append("structure", structure);
     formData.append("annotation", annotation);
-    formData.append("filepath", filepath+'.zip');
+    formData.append("filepath", filepath);
     this.props.addDataset(formData);
     this.setState({
       name: "",

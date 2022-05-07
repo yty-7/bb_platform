@@ -10,6 +10,7 @@ from datasets.signals import update, check
 def update_pytorch_model_filepath(sender, created, instance, **kwargs):
     if created or check(instance):
         print('PyTorch model signal triggered')
+        print(instance.filepath)
         update(instance, prefix='model')
 
 

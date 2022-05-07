@@ -16,20 +16,21 @@ def check(instance):
 
 def update(instance, prefix):
     p = re.compile(r'tmp_.*_tmp')
-    print("update is>>>>>>>>>"+instance.filepath)
+    print(f'instance.filepath: {instance.filepath}')
+    #print("update is>>>>>>>>>"+instance.filepath)
 
     old_filepath = instance.filepath.path
-    print("filepath is>>>>>>>>>"+old_filepath)
+    #print("filepath is>>>>>>>>>"+old_filepath)
 
     try:
         old_id = p.search(old_filepath).group()
         new_id = f'{prefix}_{instance.id}'
-        print("old id is>>>>>>>>>"+old_id)
-        print("new id is>>>>>>>>>"+new_id)
+        #print("old id is>>>>>>>>>"+old_id)
+        #print("new id is>>>>>>>>>"+new_id)
 
         new_filepath = p.sub(new_id, old_filepath)
         instance.filepath = new_filepath
-        print("filepath is>>>>>>>>>"+instance.filepath)
+        #print("filepath is>>>>>>>>>"+instance.filepath)
         instance.save(update_fields=['filepath'])
 
         folder_path = old_filepath[:old_filepath.index(old_id)]

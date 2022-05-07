@@ -1,13 +1,13 @@
 import os
 from pathlib import Path
 from collections import OrderedDict
+from processes.utils import remove_dirs
 
 from processes.models import PyTorchModel, MetricFunc, ProcessMeta, Process
 from processes.serializers import PyTorchModelSerializer, MetricFuncSerializer, ProcessMetaSerializer
 
 from projects.models import ProjectMeta, Project, Data
 from datasets.models import DatasetMeta, Dataset
-from datasets.utils import remove_dirs, extract_filename
 
 from django.conf import settings
 

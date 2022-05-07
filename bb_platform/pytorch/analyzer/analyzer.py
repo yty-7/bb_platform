@@ -322,8 +322,8 @@ def analyzer(opt, instance):
             logger.info('Saved {}'.format(output_csv_filepath))
 
             # Zip file
-            image_output_folder = output_folder / 'images'
-            csv_output_folder = output_folder / 'files'
+            image_output_folder = f'{output_folder}/images'
+            csv_output_folder = f'{output_folder}/files'
             zip_filepaths = zip_file(
                 output_folder, image_output_folder, csv_output_folder)
 
