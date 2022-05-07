@@ -91,7 +91,8 @@ class ProjectMetaUpdateView(RetrieveUpdateDestroyAPIView):
             project = instance.project
             dataset_ids = project.datasets.values_list('id', flat=True)
             new_dataset_ids = serializer.validated_data['dataset_ids']
-
+            logger.info(f'dataset_ids: {dataset_ids}')
+            logger.info(f'new_dataset_ids: {new_dataset_ids}')
             add_ids = list(set(new_dataset_ids) - set(dataset_ids))
             remove_ids = list(set(dataset_ids) - set(new_dataset_ids))
 

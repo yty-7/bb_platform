@@ -140,10 +140,8 @@ class ProjectDatasetListView(ListAPIView):  #project ddatasets view
         """
         instance = ProjectMeta.objects.get(id=pk)
         dataset_ids = instance.project.datasets.values_list('id', flat=True)
-        # queryset = DatasetMeta.objects.filter(
-        #     dataset__in=dataset_ids).order_by('id')
-        queryset = DatasetMeta.objects.all
-
+        queryset = DatasetMeta.objects.filter(
+            dataset__in=dataset_ids).order_by('id')
         page = self.paginate_queryset(queryset)
         print("page list view>>>>>>>>>>>>",page)
         if page is not None:

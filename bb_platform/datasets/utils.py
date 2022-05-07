@@ -134,28 +134,29 @@ def integrity_check(instance):
     """
 
     # raw_filepath = instance.filepath.path
-    raw_filepath = instance.filepath.path
+
     mode = instance.mode
     annotation = instance.annotation
     structure = instance.structure
 
     dataset_mode_dict = settings.DATASET_MODE_DICT
     annotation_converter_dict = settings.ANNOTATION_CONVERTER_DICT
-    logger.info("check")
+    raw_filepath =  f'{os.getcwd()}/media/datasets/{instance.owner}/{instance.filepath}/{dataset_mode_dict[instance.mode]}.zip'
 
     # Return errors
     errors = OrderedDict()
 
     if mode in dataset_mode_dict.keys():
         valid_folder_name = [dataset_mode_dict[mode]]
-
+        logger.info(f'valid_folder_name {valid_folder_name}')
         valid_filepath = extract_filename(raw_filepath)
+        logger.info(f'valid_filepath {valid_filepath}')
         extracted_root_folder = unzip_file(instance, valid_filepath, errors)
-
+        logger.info(f'extracted_root_folder {extracted_root_folder}')
         # Should be Training/Validation/Inference (ignore other invalid files in case)
         extracted_folder_name = [f for f in os.listdir(
             extracted_root_folder) if f in dataset_mode_dict.values()]
-
+        logger.info(f'extracted_folder_name {extracted_folder_name}')
         # Directories should match the mode
         validate_name_convention(
             instance, valid_folder_name, extracted_folder_name, errors)

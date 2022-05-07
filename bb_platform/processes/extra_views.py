@@ -33,8 +33,12 @@ def run_process(request, pk=None):
         project_meta = ProjectMeta.objects.get(id=request.data['project_id'])
         dataset_meta = DatasetMeta.objects.get(id=request.data['dataset_id'])
         process_meta = ProcessMeta.objects.get(id=request.data['process_id'])
+        logger.info(f'project_meta: {project_meta}')
+        logger.info(f'dataset_meta: {dataset_meta}')
+        logger.info(f'process_meta: {process_meta}')
         project_dataset_data = Data.objects.get(
             project=project_meta.project, dataset=dataset_meta.dataset)
+        logger.info(f'project_dataset_data: {project_dataset_data}')    
     except Exception as e:
         logger.debug(f'Run process error: {e}')
         logger.debug(f'Requested data: {request.data}')
@@ -43,7 +47,7 @@ def run_process(request, pk=None):
 
     dataset_mode_dict = settings.DATASET_MODE_DICT
     mode = dataset_meta.mode
-
+    logger.info(f'mode: {mode}')    
     if dataset_mode_dict[mode] == 'Training':
         email_subject = 'Testing Django'
         email_content = 'Email sent from Django'
@@ -60,7 +64,9 @@ def run_process(request, pk=None):
         logger.info(
             f'Send training requests email from {sender} to {receivers}')
     else:
-        dataset_main_folder = Path(dataset_meta.filepath.path).parent
+        dataset_main_folder = f'{os.getcwd()}/media/datasets/{dataset_meta.owner}/{dataset_meta.filepath}'
+        #dataset_main_folder = Path(dataset_meta.filepath.path).parent
+        logger.info(f'dataset_main_folder : {dataset_main_folder}')
         dataset_folder = dataset_main_folder / 'extract' / 'Inference'
 
         if not os.path.exists(dataset_folder):
@@ -79,6 +85,7 @@ def run_process(request, pk=None):
             os.mkdir(output_folder)
             logger.info('Run process info')
             logger.info(f'Created {output_folder}')
+        logger.info(f'output_folder : {output_folder}')
 
         # Model type
         model_type_dict = settings.MODEL_TYPE_DICT
