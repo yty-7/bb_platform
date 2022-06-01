@@ -5,8 +5,8 @@ import "./Homepage.css";
 
 import React, { Fragment } from "react";
 
-import { LinkTag } from "./PrivateRoute";
-import { CardField } from "./CustomField";
+import { LinkTag } from "../common/PrivateRoute";
+import { CardField } from "../common/CustomField";
 
 export default function  homepage(props) {
     return (
